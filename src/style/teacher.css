@@ -1,0 +1,307 @@
+/* Teacher Dashboard - Using Global Design System */
+.teacher-container {
+  font-family: var(--font-sans);
+  width: 100%;
+  min-height: 100vh;
+  background: var(--gray-50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Navigation Bar */
+.teacher-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: var(--bg-gradient-secondary);
+  padding: var(--space-lg) var(--space-xl);
+  color: white;
+  font-weight: var(--font-semibold);
+  box-shadow: var(--shadow-xl);
+  border-bottom: 1px solid var(--primary-200);
+}
+
+.teacher-navbar .navbar-left {
+  display: flex;
+  gap: var(--space-lg);
+  flex: 1;
+}
+
+.teacher-navbar button {
+  background: none;
+  border: none;
+  color: white;
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  transition: var(--transition-normal);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+.teacher-navbar button:hover,
+.teacher-navbar button.active {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  transform: translateY(-2px);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Content Sections */
+.content {
+  margin-top: var(--space-xl);
+  padding: var(--space-xl);
+  width: 100%;
+  max-width: var(--container-max-width);
+  display: none;
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--gray-200);
+}
+
+.content.active {
+  display: block;
+}
+
+.content h2 {
+  color: var(--gray-800);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-xl);
+  border-bottom: 3px solid var(--primary-200);
+  padding-bottom: var(--space-md);
+}
+
+/* Profile Section */
+.edit-form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.avatar-upload {
+  text-align: center;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  border: 4px solid var(--primary-200);
+  margin-bottom: var(--space-lg);
+  object-fit: cover;
+}
+
+.upload-btn {
+  display: inline-block;
+  background: var(--bg-gradient-secondary);
+  color: white;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-weight: var(--font-medium);
+  transition: var(--transition-normal);
+}
+
+.upload-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-primary);
+}
+
+.upload-btn input {
+  display: none;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  color: var(--gray-700);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: var(--space-md);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  transition: var(--transition-normal);
+  background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.profile-display {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.avatar-display {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  border: 3px solid var(--primary-200);
+  object-fit: cover;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.info-item {
+  background: var(--gray-50);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+}
+
+.info-item strong {
+  color: var(--gray-600);
+  font-size: var(--text-sm);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.info-item span {
+  color: var(--gray-800);
+  font-weight: var(--font-medium);
+  font-size: var(--text-base);
+}
+
+/* Button Styles */
+.edit-button, .save-button, .logout-button {
+  padding: var(--space-md) var(--space-xl);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-weight: var(--font-semibold);
+  transition: var(--transition-normal);
+  margin: var(--space-sm);
+}
+
+.edit-button {
+  background: var(--bg-gradient-secondary);
+  color: white;
+}
+
+.edit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-primary);
+}
+
+.save-button {
+  background: var(--bg-gradient-secondary);
+  color: white;
+}
+
+.save-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-secondary);
+}
+
+.logout-button {
+  background: linear-gradient(135deg, var(--accent-red), #dc2626);
+  color: white;
+}
+
+.logout-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Role Change Button */
+.role-change-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-size: var(--text-base);
+  transition: var(--transition-normal);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-change-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: rotate(180deg);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* Notification Wrapper */
+.notification-wrapper {
+  position: relative;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .teacher-navbar {
+    padding: var(--space-md);
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  
+  .teacher-navbar .navbar-left {
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+  
+  .content {
+    margin-top: var(--space-lg);
+    padding: var(--space-lg);
+  }
+  
+  .edit-form {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-display {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-lg);
+  }
+}
