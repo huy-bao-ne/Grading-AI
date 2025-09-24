@@ -3,6 +3,7 @@ import ClassManager from "./ClassManager.js";
 import TeacherDashboard from "./TeacherDashboard.js";
 import NotificationSystem from "./NotificationSystem.js";
 import ChatSystem from "./ChatSystem.js";
+import ProfileComponent from "./ProfileComponent.js";
 import { useNavigate } from "react-router-dom";
 import "../style/globals.css";
 import "../style/teacher.css";
@@ -10,31 +11,22 @@ import "../style/teacher.css";
 const Teacher = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [isEditing, setIsEditing] = useState(false);
+  // Profile editing state removed - ProfileComponent handles this
   const [classes, setClasses] = useState([]); // Shared state cho dashboard
 
   // Thông tin giáo viên (state)
   const [teacherInfo, setTeacherInfo] = useState({
-    name: "Trần Văn B",
+    name: localStorage.getItem('userName') || "Trần Văn B",
     teacherId: "GV98765",
     birthDate: "1985-08-20",
     gender: "Nam",
+    email: localStorage.getItem('userEmail') || "teacher@email.com",
+    phone: "0123456789",
+    department: "Khoa Công nghệ thông tin",
+    degree: "Thạc sĩ",
+    experience: "5 năm",
     avatar: "https://via.placeholder.com/100"
   });
-
-  // Xử lý thay đổi thông tin
-  const handleChange = (e) => {
-    setTeacherInfo({ ...teacherInfo, [e.target.name]: e.target.value });
-  };
-
-  // Xử lý tải lên ảnh đại diện
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setTeacherInfo({ ...teacherInfo, avatar: imageUrl });
-    }
-  };
 
   // Xử lý đăng xuất
   const handleLogout = () => {
@@ -58,29 +50,43 @@ const Teacher = () => {
   };
 
   return (
-    <div className="teacher-container">
-      {/* Thanh công cụ */}
-      <nav className="teacher-navbar">
-        <div className="navbar-left">
-          <button className={activeTab === "dashboard" ? "active" : ""} onClick={() => setActiveTab("dashboard")}>
-            📊 Dashboard
-          </button>
-          <button className={activeTab === "assignments" ? "active" : ""} onClick={() => setActiveTab("assignments")}>
-            👥 Quản lý lớp & học sinh
-          </button>
-          <button className={activeTab === "profile" ? "active" : ""} onClick={() => setActiveTab("profile")}>
-            👤 Thông tin tài khoản
-          </button>
-        </div>
-        
-        <div className="navbar-right">
-          {/* Hệ thống thông báo */}
-          <div className="notification-wrapper">
-            <NotificationSystem 
-              userRole="teacher" 
-              classes={classes} 
-              currentUser={teacherInfo} 
-            />
+    <div className="teacher-dashboard">
+      {/* Navigation - Using Homepage Style */}
+      <nav className="nav-modern">
+        <div className="nav-container">
+          <div className="nav-brand">
+            <div className="brand-icon">🎓</div>
+            <span className="brand-text">GradingAI - Teacher</span>
+          </div>
+          <div className="nav-actions">
+            <button 
+              className={`nav-tab ${activeTab === "dashboard" ? "active" : ""}`}
+              onClick={() => setActiveTab("dashboard")}
+            >
+              📊 Dashboard
+            </button>
+            <button 
+              className={`nav-tab ${activeTab === "assignments" ? "active" : ""}`}
+              onClick={() => setActiveTab("assignments")}
+            >
+              👥 Quản lý lớp
+            </button>
+            <button 
+              className={`nav-tab ${activeTab === "profile" ? "active" : ""}`}
+              onClick={() => setActiveTab("profile")}
+            >
+              👤 Hồ sơ
+            </button>
+            <div className="notification-wrapper">
+              <NotificationSystem 
+                userRole="teacher" 
+                classes={classes} 
+                currentUser={teacherInfo} 
+              />
+            </div>
+            <button className="btn-logout" onClick={handleLogout}>
+              Đăng xuất
+            </button>
           </div>
         </div>
       </nav>
@@ -95,48 +101,12 @@ const Teacher = () => {
       </div>
 
       <div className={`content ${activeTab === "profile" ? "active" : ""}`}>
-        <h2>👤 Thông tin tài khoản</h2>
-
-        {isEditing ? (
-          <div className="edit-form">
-            {/* Upload ảnh đại diện */}
-            <div className="avatar-upload">
-              <img src={teacherInfo.avatar} alt="Avatar" className="avatar-preview" />
-              <label className="upload-btn">
-                📷 Chọn ảnh
-                <input type="file" accept="image/*" onChange={handleAvatarChange} />
-              </label>
-            </div>
-
-            <label>Họ và tên:</label>
-            <input type="text" name="name" value={teacherInfo.name} onChange={handleChange} />
-
-            <label>Mã số giáo viên:</label>
-            <input type="text" name="teacherId" value={teacherInfo.teacherId} onChange={handleChange} />
-
-            <label>Ngày sinh:</label>
-            <input type="date" name="birthDate" value={teacherInfo.birthDate} onChange={handleChange} />
-
-            <label>Giới tính:</label>
-            <select name="gender" value={teacherInfo.gender} onChange={handleChange}>
-              <option value="Nam">Nam</option>
-              <option value="Nữ">Nữ</option>
-              <option value="Khác">Khác</option>
-            </select>
-
-            <button className="save-button" onClick={() => setIsEditing(false)}>💾 Lưu</button>
-          </div>
-        ) : (
-          <div className="profile-view">
-            <img src={teacherInfo.avatar} alt="Avatar" className="avatar-display" />
-            <p><strong>Họ và tên:</strong> {teacherInfo.name}</p>
-            <p><strong>Mã số giáo viên:</strong> {teacherInfo.teacherId}</p>
-            <p><strong>Ngày sinh:</strong> {teacherInfo.birthDate}</p>
-            <p><strong>Giới tính:</strong> {teacherInfo.gender}</p>
-            <button className="edit-button" onClick={() => setIsEditing(true)}>✏️ Chỉnh sửa</button>
-            <button className="logout-button" onClick={handleLogout}>🚪 Đăng xuất</button>
-          </div>
-        )}
+        <ProfileComponent 
+          userType="teacher"
+          userData={teacherInfo}
+          onUpdate={(updatedData) => setTeacherInfo(updatedData)}
+          onLogout={handleLogout}
+        />
       </div>
 
       {/* Hệ thống Chat */}
